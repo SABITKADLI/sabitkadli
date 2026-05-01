@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Core palette — actual color values so color-mix() works in the footer */
+    --background: #0f1419;
+    --foreground: #e8eaed;
+    --primary: #4a9eff;
+    --primary-foreground: #0f1419;
+    --secondary: #1a1f2e;
+    --secondary-foreground: #e8eaed;
+    --muted: #1a1f2e;
+    --muted-foreground: #9aa0a6;
+    --accent: #232936;
+    --accent-foreground: #e8eaed;
+    --destructive: #ef4444;
+    --destructive-foreground: #e8eaed;
+    --card: #232936;
+    --card-foreground: #e8eaed;
+    --popover: #1a1f2e;
+    --popover-foreground: #e8eaed;
+    --border: #2d3748;
+    --input: #2d3748;
+    --ring: #4a9eff;
+    --radius: 0.5rem;
+
+    /* Accent palette */
+    --accent-blue: #4a9eff;
+    --accent-green: #00d9a3;
+    --accent-purple: #8b5cf6;
+  }
+}
+
+* {
+  border-color: var(--border);
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans, system-ui, sans-serif);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─────────────────────────────────────────────
+   SCROLL-TRIGGER ANIMATION UTILITIES
+   Transition-based (bidirectional): fade in on
+   scroll-down, fade out on scroll-up.
+   JS toggles .is-visible via IntersectionObserver.
+───────────────────────────────────────────── */
+
+/* Base — invisible, positioned for entrance */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Directional variants */
+.animate-on-scroll.from-left  { transform: translateX(-28px); }
+.animate-on-scroll.from-right { transform: translateX(28px);  }
+.animate-on-scroll.scale-in   { transform: scale(0.92);       }
+
+.animate-on-scroll.from-left.is-visible,
+.animate-on-scroll.from-right.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.animate-on-scroll.scale-in.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger transition-delays for cascading children */
+.stagger-children > *:nth-child(1)  { transition-delay: 0ms;   }
+.stagger-children > *:nth-child(2)  { transition-delay: 80ms;  }
+.stagger-children > *:nth-child(3)  { transition-delay: 160ms; }
+.stagger-children > *:nth-child(4)  { transition-delay: 240ms; }
+.stagger-children > *:nth-child(5)  { transition-delay: 320ms; }
+.stagger-children > *:nth-child(6)  { transition-delay: 400ms; }
+.stagger-children > *:nth-child(7)  { transition-delay: 480ms; }
+.stagger-children > *:nth-child(8)  { transition-delay: 560ms; }
+
+/* Timeline animated line */
+.timeline-line-fill {
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.timeline-line-fill.is-visible {
+  transform: scaleY(1);
+}
+
+/* Hero entrance — fires once on load */
+@keyframes heroFadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-animate {
+  animation: heroFadeIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-animate-delay-1 { animation-delay: 100ms; }
+.hero-animate-delay-2 { animation-delay: 220ms; }
+.hero-animate-delay-3 { animation-delay: 340ms; }
+.hero-animate-delay-4 { animation-delay: 460ms; }
+
+/* Skill tooltip */
+.skill-tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  width: max-content;
+  max-width: 240px;
+  padding: 6px 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 50;
+  white-space: normal;
+}
+
+.skill-item:hover .skill-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* Metric card glow on hover */
+.metric-card-glow:hover {
+  box-shadow: 0 0 0 1px var(--primary), 0 8px 32px -8px color-mix(in oklch, var(--primary) 30%, transparent);
+}
+
+/* Shimmer sweep across metric cards on hover */
+@keyframes shimmer {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
+
+.metric-card-glow {
+  overflow: hidden;
+}
+
+.metric-card-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklch, var(--primary) 10%, transparent),
+    transparent
+  );
+  transform: translateX(-100%);
+}
+
+.metric-card-glow:hover::after {
+  animation: shimmer 0.75s ease forwards;
+}
+
+/* Timeline connector dot pulse */
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklch, var(--primary) 40%, transparent); }
+  50%       { box-shadow: 0 0 0 6px transparent; }
+}
+
+.timeline-dot {
+  animation: dotPulse 2.5s ease-in-out infinite;
+}
+
+/* Profile image float */
+@keyframes floatRing {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+}
+
+.profile-float {
+  animation: floatRing 4s ease-in-out infinite;
+}
