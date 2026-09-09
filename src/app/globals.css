@@ -199,3 +199,105 @@ body {
 .profile-float {
   animation: floatRing 4s ease-in-out infinite;
 }
+
+/* ─────────────────────────────────────────────
+   SCROLL-DRIVEN SYSTEM — performance & a11y
+   (Documented in docs/SCROLL-EFFECTS-PLAN.md)
+───────────────────────────────────────────── */
+
+/* GPU compositing: GSAP-driven elements only animate `transform`,
+   so promote them to their own compositor layer up front.
+   Rule of thumb: few elements, short-lived — never `*` this. */
+.parallax-layer,
+.morph-blob {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* ── ③ HORIZONTAL SCROLL — fallback & enhanced states ── */
+
+/* Default: a fully readable responsive grid.
+   This is what mobile, reduced-motion and no-JS users always get. */
+.h-process-track {
+  display: grid;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .h-process-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1280px) {
+  .h-process-track { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Enhanced: JS (gsap.matchMedia, min-width 1024px) adds .is-gsap-horizontal.
+   The track becomes a fixed-width flex row that GSAP pins & translates.
+   translateZ(0) keeps the whole strip on one composited strip. */
+.is-gsap-horizontal .h-progress-track { display: block; }
+
+.is-gsap-horizontal .h-process-track {
+  display: flex;
+  width: max-content;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.is-gsap-horizontal .h-process-card {
+  width: min(400px, 34vw);
+  flex-shrink: 0;
+}
+
+/* Progress bar sits hidden in fallback mode */
+.h-progress-track { display: none; }
+
+/* ── Option A: pure-CSS scroll-driven reveal (progressive enhancement) ──
+   Browsers with animation-timeline support (Chrome/Edge 115+) run this
+   with zero JS. No support → declaration ignored, element stays visible.
+   The class is applied WITHOUT a hidden default state, so there is no
+   flash-of-invisible-content anywhere. */
+@keyframes sd-reveal-in {
+  from { opacity: 0; transform: translate3d(0, 30px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .sd-reveal {
+      animation: sd-reveal-in linear both;
+      /* `view()` ties progress to the element crossing the viewport:
+         starts as it enters, completes 45% through the entry range */
+      animation-timeline: view();
+      animation-range: entry 0% entry 45%;
+      will-change: opacity, transform;
+    }
+  }
+}
+
+/* ── Reduced motion: everything settles instantly, nothing moves ──
+   JS-side, the same media query gates every gsap.matchMedia() effect.
+   This block is the CSS half of the contract. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  /* Existing IO reveals: visible without transition */
+  .animate-on-scroll,
+  .animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  /* Timeline connectors: appear fully drawn */
+  .timeline-line-fill { transition: none; transform: scaleY(1); }
+
+  /* Decorative infinite loops: freeze */
+  .timeline-dot,
+  .profile-float { animation: none; }
+
+  /* Hero entrance: content is simply there */
+  .hero-animate { animation: none; opacity: 1; transform: none; }
+
+  /* Pure-CSS reveals: no-op */
+  .sd-reveal { animation: none; }
+}

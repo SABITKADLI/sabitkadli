@@ -91,12 +91,32 @@ export default function Timeline() {
                       Education
                     </span>
                   )}
+                  {entry.type === "venture" && (
+                    <span className="mb-2 inline-flex items-center gap-1.5 rounded-full border border-[var(--accent-green)]/30 bg-[var(--accent-green)]/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-[var(--accent-green)]">
+                      <span
+                        className="h-1.5 w-1.5 rounded-full bg-[var(--accent-green)]"
+                        aria-hidden="true"
+                      />
+                      Founder
+                    </span>
+                  )}
 
                   <h3 className="mb-1 text-base font-bold text-foreground">
                     {entry.title}
                   </h3>
                   <p className="mb-0.5 text-sm font-medium text-primary/80">
-                    {entry.company}
+                    {entry.link ? (
+                      <a
+                        href={entry.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-sm underline-offset-4 transition-colors hover:text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+                      >
+                        {entry.company} ↗
+                      </a>
+                    ) : (
+                      entry.company
+                    )}
                   </p>
                   <time
                     className="mb-4 block text-xs text-muted-foreground/70"

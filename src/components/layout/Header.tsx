@@ -79,6 +79,14 @@ export default function Header() {
               </li>
               <li>
                 <a
+                  href="#venture"
+                  className="text-[var(--accent-green)] transition-colors hover:text-[var(--accent-green)]/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary rounded"
+                >
+                  Venture
+                </a>
+              </li>
+              <li>
+                <a
                   href="#achievements"
                   className="text-muted-foreground transition-colors hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary rounded"
                 >

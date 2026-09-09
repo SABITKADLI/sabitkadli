@@ -66,8 +66,16 @@ const jsonLd = {
   url: "https://sabitkadli.com",
   email: "jobs@sabitkadli.com",
   jobTitle: "Business Analyst, IT Consultant & Full-Stack Developer",
+  worksFor: {
+    "@type": "Organization",
+    name: "TrilloBytes",
+    url: "https://www.trillobytes.com",
+    description:
+      "Custom CRMs, websites, automations, and AI workflows built around your business. Bengaluru based — Australia, Dubai, and India roots.",
+    foundingDate: "2026",
+  },
   description:
-    "IT professional with 5+ years of experience in CRM development, data migration, system integration, API architecture, and full-stack web development.",
+    "IT professional with 5+ years of experience in CRM development, data migration, system integration, API architecture, and full-stack web development. Founder, Director & Owner of TrilloBytes (trillobytes.com).",
   alumniOf: [
     { "@type": "EducationalOrganization", name: "RMIT University" },
     { "@type": "EducationalOrganization", name: "Jain University" },

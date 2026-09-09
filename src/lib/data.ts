@@ -136,10 +136,26 @@ export interface TimelineEntry {
   period: string;
   side: "left" | "right";
   items: string[];
-  type?: "work" | "education";
+  type?: "work" | "education" | "venture";
+  /** Optional external link rendered on the company line (e.g. venture website) */
+  link?: string;
 }
 
 export const TIMELINE: TimelineEntry[] = [
+  {
+    title: "Founder, Director & Owner",
+    company: "TrilloBytes — trillobytes.com",
+    link: "https://www.trillobytes.com",
+    period: "2026 – Present",
+    side: "right",
+    type: "venture",
+    items: [
+      "Founded and launched TrilloBytes — a business-systems studio designing custom CRMs, websites, portals, automations, and AI-assisted workflows built around how each client's business actually runs. TIB it: Think. Integrate. Build.",
+      "Created the three-tier AI adoption model — Make with AI, Work with AI, and Managed by AI — so clients get AI at the level their operations are ready for, with human review points, tool limits, and audit trails built in.",
+      "Direct end-to-end delivery across the full playbook: Discover → Map → Build → Integrate → Support — from workflow mapping and system architecture to launch, monitoring, and iteration.",
+      "Bengaluru based with Australia, Dubai, and India roots — building for real estate, e-commerce, finance, sport, construction, and professional services clients.",
+    ],
+  },
   {
     title: "IT Consultant",
     company: "Compare & Connect, Melbourne, Victoria, Australia",
@@ -240,6 +256,102 @@ export const TIMELINE: TimelineEntry[] = [
     items: ["Focus on Business Economics, Administration, and Strategic Planning."],
   },
 ];
+
+// ─────────────────────────────────────────────
+// TRILLOBYTES — current venture
+// Source of truth: https://www.trillobytes.com
+// ─────────────────────────────────────────────
+export const TRILLOBYTES = {
+  name: "TrilloBytes",
+  role: "Founder · Director & Owner",
+  url: "https://www.trillobytes.com",
+  launched: "2026",
+  tagline: "TIB it — Think. Integrate. Build.",
+  positioning:
+    "Custom CRMs, websites, automations, and AI workflows built around your business. TrilloBytes turns scattered tools, repeated admin, unclear handoffs, and slow follow-up into one reliable business system.",
+  footprint: "Bengaluru based · Australia, Dubai & India roots",
+  cta: "Free consultations open — first come, first served.",
+
+  /** Sticky-morph stages (the TIB method) — drives the morphing badge */
+  morphStages: [
+    {
+      key: "think",
+      label: "Think",
+      heading: "Map the workflow before the screen.",
+      body: "Every build starts by learning the business — pain points, tools, data, team roles, and the outcome that makes the project worth it. Messy work becomes a visible flow: inputs, decisions, handoffs, permissions, exceptions, and reporting.",
+    },
+    {
+      key: "integrate",
+      label: "Integrate",
+      heading: "Efficiency is how tools behave together.",
+      body: "Scattered tools become one system. Approved APIs, data sources, web automations, emails, forms, payments, documents, and team tools are connected so work stops leaking between spreadsheets, chats, and inboxes.",
+    },
+    {
+      key: "build",
+      label: "Build",
+      heading: "One system catches the flow.",
+      body: "The CRM, website, portal, dashboard, or AI workflow is built from the ground up around the mapped flow — then launched, monitored, and improved around real user behaviour after handover.",
+    },
+  ] as const,
+
+  /** AI service tiers — rendered as the three-card strip */
+  tiers: [
+    {
+      name: "Make with AI",
+      blurb:
+        "A strong workbench: the CRM, website, portal, dashboard, or workflow is designed and built so the team has a real place to work — screens, database shape, workflows, launch docs, and handover handled.",
+    },
+    {
+      name: "Work with AI",
+      blurb:
+        "A teammate who passes the right note to the right person: AI summarises, routes, drafts, checks, and prepares actions while people approve sensitive work — inbox triage, follow-up drafts, scoring, review queues.",
+    },
+    {
+      name: "Managed by AI",
+      blurb:
+        "A careful operations watchtower: the system monitors stuck work, reports exceptions, and suggests improvements — designed with logs, tool limits, human approval points, and support routines.",
+    },
+  ] as const,
+
+  /** Delivery process — rendered as the pinned horizontal-scroll cards */
+  process: [
+    {
+      step: "01",
+      title: "Discover",
+      body: "Learn the business, pain points, tools, data, team roles, and the outcome that would make the project worth it.",
+    },
+    {
+      step: "02",
+      title: "Map",
+      body: "Turn messy work into a visible flow: inputs, decisions, handoffs, permissions, exceptions, and reporting.",
+    },
+    {
+      step: "03",
+      title: "Build",
+      body: "Create the CRM, website, portal, dashboard, automation, or AI workflow from the ground up around that flow.",
+    },
+    {
+      step: "04",
+      title: "Integrate",
+      body: "Connect approved APIs, data sources, web automations, emails, forms, payments, documents, and team tools.",
+    },
+    {
+      step: "05",
+      title: "Support",
+      body: "Help launch, watch what breaks, improve daily use, and shape the next release around real user behaviour.",
+    },
+  ] as const,
+
+  /** What the studio ships — chip row under the section header */
+  offerings: [
+    "Custom CRMs & client portals",
+    "Websites",
+    "API integrations",
+    "Web automations",
+    "Dashboards & reporting",
+    "AI-assisted workflows",
+  ] as const,
+};
 
 // ─────────────────────────────────────────────
 // CONTACT

@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import Header from "@/components/layout/Header";
 import HeroSummary from "@/components/sections/HeroSummary";
+import TrilloBytes from "@/components/sections/TrilloBytes";
 import Achievements from "@/components/sections/Achievements";
 import Skills from "@/components/sections/Skills";
 import Timeline from "@/components/sections/Timeline";
@@ -42,6 +43,10 @@ export default function Home() {
 
       <main id="main-content" className="relative z-10 overflow-x-hidden">
         <HeroSummary />
+        {/* Current venture — TrilloBytes (Director & Owner).
+            Also hosts the scroll-driven effects: parallax orbs, sticky morph,
+            and the pinned horizontal delivery playbook. */}
+        <TrilloBytes />
         <Achievements />
         <Skills />
         <Timeline />
