@@ -60,6 +60,8 @@ function renderSection(section: BlogSection, index: number) {
               {" "}
               <a
                 href={section.reference.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-primary underline underline-offset-4 hover:text-primary/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
               >
                 {section.reference.label}
