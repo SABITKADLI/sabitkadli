@@ -28,6 +28,16 @@ export default function HeroSummary() {
           <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
             {ABOUT.narrative}
           </p>
+          <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
+            For custom CRM, websites and business automation, explore{" "}
+            <a
+              href="https://www.trillobytes.com/"
+              className="text-primary underline underline-offset-4 hover:text-primary/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+            >
+              TrilloBytes
+            </a>
+            , a business systems studio focused on connecting everyday work.
+          </p>
         </div>
 
         {/* Currently building */}

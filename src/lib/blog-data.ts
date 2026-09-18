@@ -1,6 +1,7 @@
 export interface BlogSection {
   type: "paragraph" | "h2" | "h3" | "list" | "highlight" | "metric";
   content: string | string[];
+  reference?: { href: string; label: string };
 }
 
 export interface BlogPost {
@@ -91,6 +92,14 @@ export const BLOG_POSTS: BlogPost[] = [
         type: "paragraph",
         content:
           "The integration took six weeks from requirements to production, including security review and UAT. The business case paid back within the first billing cycle based on improved conversion alone.",
+      },
+      {
+        type: "paragraph",
+        content: "Planning a similar integration? Map the trigger, system of record, approvals and failure cases before choosing tools. For a practical checklist and a capacity estimate, use the",
+        reference: {
+          href: "https://www.trillobytes.com/resources.html",
+          label: "TrilloBytes automation planning guide",
+        },
       },
     ],
   },
